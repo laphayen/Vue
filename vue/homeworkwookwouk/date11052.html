@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .fantasy {
+            font-family: Fantasy;
+        }
+
+        .cursive {
+            font-family: cursive;
+        }
+
+        .impact {
+            font-family: Impact;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p :style="stlyeObject">Let's change the font style!</p>
+        <hr>
+        <p>색상 목록</p>
+        <ul>
+            <li>red</li>
+            <li>blue</li>
+        </ul>
+
+        <p>글꼴 목록</p>
+        <ul>
+            <li>fantasy</li>
+            <li>cursive</li>
+            <li>impact</li>
+        </ul>
+        <hr>
+
+        <form @submit.prevent="changeStyle">
+            <label for="color">색 입력 : </label>
+            <input type="text" v-model="colorType" id="color " placeholder="입력해주세요🍕🍔🍟🌭🍿🧂">
+            <br>
+            <label for="font">글꼴 입력 : </label>
+            <input type="text" v-model="fontType" id="font" placeholder="입력해주세요🍕🍔🍟🌭🍿🧂">
+            <br>
+            <button type="submit">변경!</button>
+        </form>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+
+            setup() {
+                const colorType = ref('');
+                const fontType = ref('');
+                const stlyeObject = ref({});
+
+                const changeStyle = () => {
+
+                    stlyeObject.value = {
+
+                        color: colorType.value.trim(),
+                        fontFamily: fontType.value.trim()
+                    }
+
+                    colorType.value = '';
+                    fontType.value = '';
+
+                };
+
+                return {
+                    colorType, fontType, stlyeObject, changeStyle
+                }
+            }
+        }).mount("#app")
+
+    </script>
+
+    <script>
+        /*
+          - Vue3 CDN을 사용한다.
+          1. 새로운 app instance를 생성하여 아이디가 app인 container에 mount 하시오.
+          2. 사용자가 입력한 색상 명이 colorType 변수에 할당 될 수 있도록 양방향 바인딩 directive를 사용하시오.
+          3. 사용자가 입력한 글꼴 명이 fontType 변수에 할당 될 수 있도록 양방향 바인딩 directive를 사용하시오.
+          4. 첫 번째 p 태그의 style에 적용할 stlyeObject 변수를 만들고, 단방향 바인딩 directive를 사용하여 연결하시오.
+          5. 값을 모두 입력 한 후, enter를 입력하거나, `변경!` 버튼을 클릭하면, changeStyle 함수가 실행되도록 이벤트 핸들러 directive를 사용하시오.
+            - 단, enter를 입력 할 때도, 버튼을 클릭 할 때도, form 태그의 기본 이벤트 동작은 중단 시켜야 한다.
+            - changeStyle 함수 내부에서 사용자가 입력한 colorType, fontType 값을 적절한 각각 'color', 'font-family' 키에 할당한 객체를 만든다.
+            - 생성된 객체를 styleObject에 할당한다.
+            - 할당이 모두 완료되면 colorType과 fontType의 값을 빈 문자열로 초기화 한다.
+        */
+    </script>
+</body>
+
+</html>

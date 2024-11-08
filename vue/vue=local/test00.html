@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>{{msg}}</div> <!-- 내부가 자바스크립트 코드로 보여주고, createApp에서 실행-->
+        <div><h2>{{cmg()}}</h2></div>
+    </div>
+
+    <script>
+        // composition
+        // 
+        const {createApp, ref} = Vue
+
+        createApp({
+            setup() {
+                // msg에 대한 묶음.
+                const msg = ref('hello'); 
+                const cmg = () => {
+                    msg.value = 'changeHello';
+                }
+
+                return {
+                    msg, cmg
+                }
+            }
+        }).mount("#app")
+
+
+
+        // option
+        // date, function 따로 묶는 방식
+        // const {createApp} = Vue
+
+        // createApp ({
+        //     data() {
+        //         return {
+        //             msg: 'hello'
+        //        }
+        //     }
+        // }).mount("#app")
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        #test-id {
+            font-style: italic;
+            font-size: 39px;
+        }
+        
+        .clicked {
+            width: 100px;
+            height: 200px;
+            border: 1px solid #000000;
+        }
+
+        .clicked2 {
+            width: 100px;
+            height: 200px;
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <div v-text="msg"></div><!-- "" 여기 안에도 javascript 코드이더라-->
+        <div v-html="msg"></div><!-- 마크업으로 인식하더라 !!!! -->
+
+        <div>{{num+1}}</div>
+        <div v-text="num>10? 100 : 5"></div>
+        <div></div>
+
+        <input type="text" :value="hello"/><!--vue에서 도는 자바스크립트 코드-->
+        
+        <p>이건 보임</p><input type="text" :value="msg" v-show="true"/>
+
+        
+        <p>이건 안보임</p><input type="text" :value="msg" v-show="msg.length !=0"/>
+        <p>이건 안보임</p><input type="text" :value="msg" v-if="true"/> <!-- 노드가 없기 때문에 초기 렌더링 비용이 더 작더라-->
+
+        <div :id="idval">v-bind 연습</div>
+
+        <div :[key]="keyval"> v-bind 2</div>
+
+        <input type="button" :value="bText" v-on:click="bClick()">
+
+        <input type="button" :value="bText" @click="bClick('Vue1')">
+        
+        <input type="button" :value="bText" @click="bClick($event, 'Vue1')">
+
+        <div @click="styleClick" :class="ssafyStyle">
+            ddd
+        </div>
+
+    </div>
+
+    <script>
+        // composition
+        const {createApp, ref} = Vue
+
+        const app = createApp({
+            setup() {
+                const ssafyStyle = ref("clicked");
+                const styleClick = () => {
+                    ssafyStyle.value = "clicked";
+                }
+
+                // msg에 대한 묶음.
+                const hello = ref("ddddd");
+                const num = ref(1);
+                const msg = ref('<h2>hello<h2>'); 
+                const idval = ref("test-id");
+                const key = ref("id");
+                const keyval = ref("test-class2");
+                
+                const bText = ref("click");
+                const aText = ref("clicked!");
+                const bClick = (e, msg) => {
+                    console.lob(e.currentTarget);
+                    console.lob(e.target); 
+                    console.lob(event.target);
+                    bText.value = "clicked!" + msg;
+                    
+                }
+
+                return {
+                    msg, num, hello, idval, key, keyval, bText, aText, bClick, ssafyStyle, styleClick
+                }
+            }
+        }).mount("#app")
+
+    </script>
+</body>
+</html>

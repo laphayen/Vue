@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        .completed{
+            text-decoration: line-through;
+            font-style: italic;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li :style="ssafyStyle" :class="{completed: todo.done}" v-for="todo in todos" >
+                {{todo.msg}}<button @click="complete(todo)">aaaaaaaaa</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // composition
+        const {createApp, ref} = Vue;
+
+        const app = createApp({
+            setup() {
+                // msg에 대한 묶음.
+                const todos = ref([{
+                    msg: "5시간 이상 자기",
+                    done: false
+                }, {
+                    msg: "알고리즘 1문제",
+                    done: false
+
+                }, {
+                    msg: "vue 공부",
+                    done: false
+
+                }, {
+                    msg: "아이스크림 먹기",
+                    done: false
+
+                }]); 
+                
+                const complete = (todo) => {
+                    todo.done = !todo.done;
+                }
+
+                const ssafyStyle = ref({
+                    fontSize: '20px',
+                })
+
+                return {
+                    todos, complete, ssafyStyle
+                }
+            }
+        }).mount("#app")
+
+    </script>
+</body>
+</html>

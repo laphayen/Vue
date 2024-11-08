@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        .red {
+            color: red;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 
+        
+    1. 텍스트 입력 값을 바인딩
+    2. 조건에 따른 함수 적용
+    3. 스타일 적용
+    4. 입력 값이 변경되면 기존 색상 복원
+    
+    -->
+
+    <div id="app">
+        <p>입력창에 올바른 색상 명을 입력하면 글자색이 바껴요.</p>
+        <p>색상 목록</p>
+        <ul>
+            <li :class="{red: isRed}">red</li>
+            <li :class="{blue: isBlue}">blue</li>
+            <li :class="{orange: isOrange}">orange</li>
+            <li :class="{green: isGreen}">green</li>
+        </ul>
+        <hr>
+        <p>색상 목록중 하나를 입력 해 보세요.</p>
+        <input type="text" v-model="colorText" @input="colorInput" placeholder="입력해주세요🍕🍔🍟🌭🍿🧂">
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        const app = createApp({
+            setup() {
+                
+                // 다른 값을 입력 시 색상 초기화 ///////////////////////////////////////////////////////
+                const reset = () => {
+                    isRed.value = false;
+                    isBlue.value = false;
+                    isOrange.value = false;
+                    isGreen.value = false;
+                }
+                
+
+                // 입력 적용 //////////////////////////////////////////////////////////////////////////
+                const colorText = ref('');
+                const msg = ref('');
+                const colorInput = () => {
+                    reset();
+
+                    if (colorText.value.toLowerCase() === 'red') {
+                        setRed();
+                    }
+                    if (colorText.value.toLowerCase() === 'blue') {
+                        setBlue();
+                    }
+                    if (colorText.value.toLowerCase() === 'orange') {
+                        setOrange();
+                    }
+                    if (colorText.value.toLowerCase() === 'green') {
+                        setGreen();
+                    }
+                }
+                
+                // 색상 적용 //////////////////////////////////////////////////////////////////////////
+                const status = ref('none');
+                const isRed = ref(false);
+                const isBlue = ref(false);
+                const isOrange = ref(false);
+                const isGreen = ref(false);
+                
+                const setRed = () => {
+                    isRed.value = !isRed.value;
+                }
+                const setBlue = () => {
+                    isBlue.value = !isBlue.value;
+                }
+                const setOrange = () => {
+                    isOrange.value = !isOrange.value;
+                }
+                const setGreen = () => {
+                    isGreen.value = !isGreen.value;
+                }
+
+                return {
+                    colorText, msg, colorInput, status, 
+                    setRed, setBlue, setOrange, setGreen,
+                    isRed, isBlue, isOrange, isGreen,
+                    reset
+                }
+            }
+        }).mount("#app")
+
+    </script>
+
+    <script>
+        /*
+          - Vue3 CDN을 사용한다.
+          1. 새로운 app instance를 생성하여 아이디가 app인 container에 mount 하시오.
+          2. 사용자가 입력한 값이 colorClass 변수에 할당 될 수 있도록 양방향 바인딩 directive를 사용하시오.
+          3. colorClass 변수의 값이 첫 번째 p 태그의 class가 될 수 있도록 단방향 바인딩 directive를 사용하시오.
+        */
+    </script>
+</body>
+
+</html>
